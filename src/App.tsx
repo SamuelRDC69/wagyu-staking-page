@@ -6,9 +6,10 @@ import './App.css';
 import { Chains, Session, SessionKit } from '@wharfkit/session';
 import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor';
 import WebRenderer from '@wharfkit/web-renderer';
-import Leaderboard from './Leaderboard/Leaderboard';  // Import the leaderboard
+import Leaderboard from './Leaderboard/Leaderboard'; // Correctly importing the Leaderboard component
 import React from 'react';
 
+// Initialize the WharfKit session
 const sessionKit = new SessionKit({
   appName: 'demo',
   chains: [Chains.Jungle4],
@@ -17,22 +18,27 @@ const sessionKit = new SessionKit({
 });
 
 function App() {
-  const [session, setSession]: [Session | undefined, Dispatch<SetStateAction<Session | undefined>>] = useState();
+  // TypeScript type handling for session state
+  const [session, setSession] = useState<Session | undefined>(undefined);
 
+  // Restore the session if it exists
   useEffect(() => {
     sessionKit.restore().then((restored) => setSession(restored));
   }, []);
 
+  // Function for logging in
   async function login() {
     const response = await sessionKit.login();
     setSession(response.session);
   }
 
+  // Function for logging out
   async function logout() {
     sessionKit.logout(session);
     setSession(undefined);
   }
 
+  // Function for performing a transaction
   async function transact() {
     if (!session) {
       throw new Error('Cannot transact without a session.');
@@ -74,13 +80,13 @@ function App() {
               Login
             </button>
           ) : (
-            <React.Fragment>
+            <>
               <p>{String(session.actor)}</p>
               <button className="primary" onClick={transact}>
                 Test Transaction (No Broadcast)
               </button>
               <button onClick={logout}> Logout </button>
-            </React.Fragment>
+            </>
           )}
           <p>Edit <code>src/App.tsx</code> and save to test HMR</p>
         </div>
@@ -93,9 +99,9 @@ function App() {
         </Link>
       </div>
 
-      {/* Routes setup */}
+      {/* Route setup for Leaderboard */}
       <Routes>
-        <Route path="/leaderboard" element={<LeaderboardPage />} />
+        <Route path="/leaderboard" element={<Leaderboard />} /> {/* Corrected Route */}
       </Routes>
     </Router>
   );
