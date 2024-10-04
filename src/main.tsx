@@ -6,7 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react'; // For Chakra UI
 import { BrowserRouter } from 'react-router-dom';  // For routing
 
 // Initialize Eruda only in development or on mobile devices
-if (process.env.NODE_ENV === 'development' || /Android|iPhone/i.test(navigator.userAgent)) {
+if (import.meta.env.MODE === 'development' || /Android|iPhone/i.test(navigator.userAgent)) {
   import('eruda').then(eruda => {
     eruda.init();
   });
