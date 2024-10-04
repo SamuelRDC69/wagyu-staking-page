@@ -6,10 +6,10 @@ import './App.css';
 import { Chains, Session, SessionKit } from '@wharfkit/session';
 import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor';
 import WebRenderer from '@wharfkit/web-renderer';
-import Leaderboard from './Leaderboard/Leaderboard'; // Correctly importing the Leaderboard component
+import Leaderboard from './Leaderboard/Leaderboard';  // No props needed
 import React from 'react';
 
-// Initialize the WharfKit session
+// Initialize sessionKit with wharfkit
 const sessionKit = new SessionKit({
   appName: 'demo',
   chains: [Chains.Jungle4],
@@ -18,27 +18,22 @@ const sessionKit = new SessionKit({
 });
 
 function App() {
-  // TypeScript type handling for session state
   const [session, setSession] = useState<Session | undefined>(undefined);
 
-  // Restore the session if it exists
   useEffect(() => {
     sessionKit.restore().then((restored) => setSession(restored));
   }, []);
 
-  // Function for logging in
   async function login() {
     const response = await sessionKit.login();
     setSession(response.session);
   }
 
-  // Function for logging out
   async function logout() {
     sessionKit.logout(session);
     setSession(undefined);
   }
 
-  // Function for performing a transaction
   async function transact() {
     if (!session) {
       throw new Error('Cannot transact without a session.');
@@ -99,9 +94,9 @@ function App() {
         </Link>
       </div>
 
-      {/* Route setup for Leaderboard */}
+      {/* Routes setup */}
       <Routes>
-        <Route path="/leaderboard" element={<Leaderboard />} /> {/* Corrected Route */}
+        <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </Router>
   );
