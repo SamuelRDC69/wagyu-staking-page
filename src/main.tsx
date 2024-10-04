@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';  // For routing
 // Initialize Eruda only in development or on mobile devices
 if (import.meta.env.MODE === 'development' || /Android|iPhone/i.test(navigator.userAgent)) {
   import('eruda').then(eruda => {
-    eruda();  // Now correctly calls the default function
+    eruda.default.init();  // Use eruda.default.init() to access the init function
   });
 }
 
