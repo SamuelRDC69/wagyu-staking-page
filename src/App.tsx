@@ -6,7 +6,7 @@ import './App.css';
 import { Chains, Session, SessionKit } from '@wharfkit/session';
 import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor';
 import WebRenderer from '@wharfkit/web-renderer';
-import Leaderboard from './Leaderboard/Leaderboard';  // No props needed
+import Leaderboard from './Leaderboard/Leaderboard';
 import React from 'react';
 
 // Initialize sessionKit with wharfkit
@@ -25,13 +25,21 @@ function App() {
   }, []);
 
   async function login() {
-    const response = await sessionKit.login();
-    setSession(response.session);
+    try {
+      const response = await sessionKit.login();
+      setSession(response.session);
+    } catch (e) {
+      console.error('Login error: ', e);
+    }
   }
 
   async function logout() {
-    sessionKit.logout(session);
-    setSession(undefined);
+    try {
+      sessionKit.logout(session);
+      setSession(undefined);
+    } catch (e) {
+      console.error('Logout error: ', e);
+    }
   }
 
   async function transact() {
@@ -49,9 +57,11 @@ function App() {
         memo: 'Yay WharfKit! Thank you <3',
       },
     };
-    session.transact({ action }, { broadcast: false }).catch((e) => {
-      console.log('error caught in transact', e);
-    });
+    try {
+      await session.transact({ action }, { broadcast: false });
+    } catch (e) {
+      console.log('Error in transaction:', e);
+    }
   }
 
   return (
@@ -83,18 +93,18 @@ function App() {
               <button onClick={logout}> Logout </button>
             </>
           )}
-          <p>Edit <code>src/App.tsx</code> and save to test HMR</p>
+          <p>
+            Edit <code>src/App.tsx</code> and save to test HMR
+          </p>
         </div>
         <p className="read-the-docs">
           Click on the Vite, React, and Wharf logos to learn more
         </p>
-        {/* Button to go to Leaderboard */}
         <Link to="/leaderboard">
           <button className="primary">Go to Leaderboard</button>
         </Link>
       </div>
 
-      {/* Routes setup */}
       <Routes>
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
