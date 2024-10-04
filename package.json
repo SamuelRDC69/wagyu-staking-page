@@ -14,14 +14,14 @@
     "@wharfkit/web-renderer": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.10.0",  // Added React Router for routing
-    "@chakra-ui/react": "^2.5.1",  // Added Chakra UI
-    "@emotion/react": "^11.10.6",  // Added Emotion for Chakra UI
-    "@emotion/styled": "^11.10.6",  // Added Emotion for Chakra UI
-    "framer-motion": "^9.0.7",  // Added for animations in Leaderboard
-    "moment": "^2.29.4",  // Added for date handling
-    "react-countup": "^6.4.1",  // Added for counting animations in Leaderboard
-    "react-icons": "^4.7.1"  // Added for icons used in Leaderboard
+    "react-router-dom": "^6.10.0",
+    "@chakra-ui/react": "^2.5.1",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "framer-motion": "^9.0.7",
+    "moment": "^2.29.4",
+    "react-countup": "^6.4.1",
+    "react-icons": "^4.7.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
