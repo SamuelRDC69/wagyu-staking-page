@@ -183,6 +183,7 @@ function App() {
         </Button>
       </div>
 
+      {/* Wrapping Routes in a Fragment */}
       <Routes>
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
