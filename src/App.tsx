@@ -12,7 +12,7 @@ const sessionKit = new SessionKit({
   appName: 'Token Staking DApp',
   chains: [
     {
-      id: 'f16bff0b8fae16cc7cf1398dddaec3665240e0aa4a2da9a3bc6b5d2fa1265da3',  // Correct WAX Testnet Chain ID
+      id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',  // Correct WAX Testnet Chain ID
       url: 'https://testnet.waxsweden.org',  // WAX Testnet API endpoint
     },
   ],
