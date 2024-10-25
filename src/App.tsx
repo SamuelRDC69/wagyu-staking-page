@@ -10,13 +10,16 @@ import { Box, Button, Input, Heading, Text, VStack, useToast } from '@chakra-ui/
 
 const sessionKit = new SessionKit({
   appName: 'Token Staking DApp',
-  chains: [{
-    id: 'f16bff0b8fae16cc7cf1398dddaec3665240e0aa4a2da9a3bc6b5d2fa1265da3',  // WAX Testnet Chain ID
-    url: 'https://testnet.waxsweden.org',  // WAX Testnet endpoint
-  }],
+  chains: [
+    {
+      id: 'f16bff0b8fae16cc7cf1398dddaec3665240e0aa4a2da9a3bc6b5d2fa1265da3',  // Correct WAX Testnet Chain ID
+      url: 'https://testnet.waxsweden.org',  // WAX Testnet API endpoint
+    },
+  ],
   ui: new WebRenderer(),
   walletPlugins: [new WalletPluginAnchor()],
 });
+
 
 
 
