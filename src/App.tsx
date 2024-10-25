@@ -1,7 +1,5 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'; // Importing Dispatch and SetStateAction
-import reactLogo from './assets/react.svg';
-import wharfLogo from './assets/wharf.svg';
 import './App.css';
 import { Chains, Session, SessionKit } from '@wharfkit/session';
 import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor';
