@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import wharfLogo from './assets/wharf.svg';
@@ -65,7 +65,6 @@ function App() {
   }
 
   return (
-    <Router>
       <div className="App">
         <div>
           <a href="https://vitejs.dev" target="_blank">
@@ -108,7 +107,6 @@ function App() {
       <Routes>
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
-    </Router>
   );
 }
 
