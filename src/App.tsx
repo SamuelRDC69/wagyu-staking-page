@@ -142,14 +142,14 @@ function App() {
           Token Staking DApp
         </Heading>
 
-        {/* Wrap multiple elements in a single parent div or fragment */}
+        {/* Ensure all elements are wrapped in a single parent */}
         <div className="card">
           {!session ? (
             <Button colorScheme="blue" onClick={login} isLoading={isLoading}>
               Connect Wallet
             </Button>
           ) : (
-            <div> {/* Added div to wrap multiple children */}
+            <>
               <Text>Welcome, {session.actor}</Text>
               <Input
                 placeholder="Amount to stake"
@@ -169,7 +169,7 @@ function App() {
               <Button colorScheme="gray" onClick={logout} isLoading={isLoading}>
                 Logout
               </Button>
-            </div> {/* Closing the wrapping div */}
+            </>
           )}
         </div>
 
