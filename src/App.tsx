@@ -11,13 +11,13 @@ import { Box, Button, Input, Heading, Text, VStack, useToast } from '@chakra-ui/
 const sessionKit = new SessionKit({
   appName: 'Token Staking DApp',
   chains: [{
-    id: 'wax-testnet',
+    id: 'f16bff0b8fae16cc7cf1398dddaec3665240e0aa4a2da9a3bc6b5d2fa1265da3',  // WAX Testnet Chain ID
     url: 'https://testnet.waxsweden.org',  // WAX Testnet endpoint
-    // No chainId here, SessionKit will handle it based on the ID
   }],
   ui: new WebRenderer(),
   walletPlugins: [new WalletPluginAnchor()],
 });
+
 
 
 function App() {
