@@ -1,5 +1,5 @@
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'; // Importing Dispatch and SetStateAction
 import reactLogo from './assets/react.svg';
 import wharfLogo from './assets/wharf.svg';
 import './App.css';
@@ -8,104 +8,174 @@ import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor';
 import WebRenderer from '@wharfkit/web-renderer';
 import Leaderboard from './Leaderboard/Leaderboard';
 import React from 'react';
+import { Box, Button, Input, Heading, Text, VStack, useToast } from '@chakra-ui/react'; // Chakra UI for design
 
-// Initialize sessionKit with wharfkit
+// Initialize sessionKit with WharfKit
 const sessionKit = new SessionKit({
-  appName: 'demo',
+  appName: 'Token Staking DApp',
   chains: [Chains.Jungle4],
   ui: new WebRenderer(),
   walletPlugins: [new WalletPluginAnchor()],
 });
 
 function App() {
-  const [session, setSession] = useState<Session | undefined>(undefined);
+  const [session, setSession] = useState<Session | undefined>(undefined); // State for managing the session
+  const [stakedAmount, setStakedAmount] = useState<string>(''); // State for staked amount input
+  const [isLoading, setIsLoading] = useState<boolean>(false); // State for loading status
   const navigate = useNavigate(); // Hook for navigation
+  const toast = useToast(); // Chakra UI's toast for notifications
 
+  // Restore session when app loads
   useEffect(() => {
     sessionKit.restore().then((restored) => setSession(restored));
   }, []);
 
+  // Login function for wallet connection
   async function login() {
     try {
       const response = await sessionKit.login();
       setSession(response.session);
+      toast({ status: 'success', description: 'Wallet connected!' });
     } catch (e) {
       console.error('Login error: ', e);
+      toast({ status: 'error', description: 'Failed to connect wallet' });
     }
   }
 
+  // Logout function
   async function logout() {
     try {
-      sessionKit.logout(session);
+      await sessionKit.logout(session);
       setSession(undefined);
+      toast({ status: 'success', description: 'Logged out successfully' });
     } catch (e) {
       console.error('Logout error: ', e);
+      toast({ status: 'error', description: 'Failed to log out' });
     }
   }
 
-  async function transact() {
-    if (!session) {
-      throw new Error('Cannot transact without a session.');
-    }
+  // Stake tokens by interacting with the smart contract
+  async function stakeTokens() {
+    if (!session || !stakedAmount) return;
+    setIsLoading(true);
+
     const action = {
       account: 'eosio.token',
       name: 'transfer',
       authorization: [session.permissionLevel],
       data: {
         from: session.actor,
-        to: 'teamgreymass',
-        quantity: '0.0001 EOS',
-        memo: 'Yay WharfKit! Thank you <3',
+        to: 'your_staking_contract',  // Replace with the actual contract account name
+        quantity: `${stakedAmount} TOKEN`,  // Replace TOKEN with the correct token symbol (e.g., EOS)
+        memo: 'stake',
       },
     };
+
     try {
-      await session.transact({ action }, { broadcast: false });
-    } catch (e) {
-      console.log('Error in transaction:', e);
+      await session.transact({ action });
+      toast({ status: 'success', description: 'Tokens staked successfully!' });
+    } catch (error) {
+      console.error('Staking error:', error);
+      toast({ status: 'error', description: 'Failed to stake tokens' });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  // Claim rewards function by calling the 'claim' action on the smart contract
+  async function claimRewards() {
+    if (!session) return;
+    setIsLoading(true);
+
+    const action = {
+      account: 'your_staking_contract', // Replace with actual contract
+      name: 'claim',
+      authorization: [session.permissionLevel],
+      data: {
+        claimer: session.actor,
+        pool_id: 1,  // Replace with actual pool_id or logic to retrieve the pool_id
+      },
+    };
+
+    try {
+      await session.transact({ action });
+      toast({ status: 'success', description: 'Rewards claimed successfully!' });
+    } catch (error) {
+      console.error('Claim error:', error);
+      toast({ status: 'error', description: 'Failed to claim rewards' });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  // Unstake tokens function by calling the 'unstake' action on the smart contract
+  async function unstakeTokens() {
+    if (!session || !stakedAmount) return;
+    setIsLoading(true);
+
+    const action = {
+      account: 'your_staking_contract', // Replace with actual contract
+      name: 'unstake',
+      authorization: [session.permissionLevel],
+      data: {
+        claimer: session.actor,
+        pool_id: 1,  // Replace with actual pool_id
+        quantity: `${stakedAmount} TOKEN`,  // Ensure correct token symbol
+      },
+    };
+
+    try {
+      await session.transact({ action });
+      toast({ status: 'success', description: 'Tokens unstaked successfully!' });
+    } catch (error) {
+      console.error('Unstaking error:', error);
+      toast({ status: 'error', description: 'Failed to unstake tokens' });
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
     <>
       <div className="App">
-        <div>
-          <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
-            <img src="/vite.svg" className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
-          <a href="https://wharfkit.com" target="_blank" rel="noopener noreferrer">
-            <img src={wharfLogo} className="logo wharf" alt="Wharf logo" />
-          </a>
-        </div>
-        <h1>Vite + React + Wharf</h1>
+        <Heading as="h1" size="lg" textAlign="center" mt={8}>Token Staking DApp</Heading>
         <div className="card">
           {!session ? (
-            <button className="primary" onClick={login}>
-              Login
-            </button>
+            <Button colorScheme="blue" onClick={login} isLoading={isLoading}>
+              Connect Wallet
+            </Button>
           ) : (
             <>
-              <p>{String(session.actor)}</p>
-              <button className="primary" onClick={transact}>
-                Test Transaction (No Broadcast)
-              </button>
-              <button onClick={logout}> Logout </button>
+              <Text>Welcome, {session.actor}</Text>
+              <Input
+                placeholder="Amount to stake"
+                value={stakedAmount}
+                onChange={(e) => setStakedAmount(e.target.value)}
+                mb={3}
+              />
+              <Button colorScheme="green" onClick={stakeTokens} isLoading={isLoading}>
+                Stake Tokens
+              </Button>
+              <Button colorScheme="orange" onClick={claimRewards} isLoading={isLoading}>
+                Claim Rewards
+              </Button>
+              <Button colorScheme="red" onClick={unstakeTokens} isLoading={isLoading}>
+                Unstake Tokens
+              </Button>
+              <Button colorScheme="gray" onClick={logout} isLoading={isLoading}>
+                Logout
+              </Button>
             </>
           )}
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
         </div>
         <p className="read-the-docs">
           Click on the Vite, React, and Wharf logos to learn more
         </p>
 
         {/* Button to navigate to Leaderboard */}
-        <button className="primary" onClick={() => navigate('/leaderboard')}>
+        <Button colorScheme="blue" onClick={() => navigate('/leaderboard')}>
           Go to Leaderboard
-        </button>
+        </Button>
       </div>
 
       <Routes>
