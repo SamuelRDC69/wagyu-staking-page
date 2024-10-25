@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import wharfLogo from './assets/wharf.svg';
@@ -19,6 +19,7 @@ const sessionKit = new SessionKit({
 
 function App() {
   const [session, setSession] = useState<Session | undefined>(undefined);
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     sessionKit.restore().then((restored) => setSession(restored));
@@ -100,9 +101,11 @@ function App() {
         <p className="read-the-docs">
           Click on the Vite, React, and Wharf logos to learn more
         </p>
-        <Link to="/leaderboard">
-          <button className="primary">Go to Leaderboard</button>
-        </Link>
+
+        {/* Button to navigate to Leaderboard */}
+        <button className="primary" onClick={() => navigate('/leaderboard')}>
+          Go to Leaderboard
+        </button>
       </div>
 
       <Routes>
