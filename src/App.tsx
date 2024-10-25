@@ -8,10 +8,13 @@ import Leaderboard from './Leaderboard/Leaderboard';
 import React from 'react';
 import { Box, Button, Input, Heading, Text, VStack, useToast } from '@chakra-ui/react'; // Chakra UI for design
 
-// Initialize sessionKit with WharfKit
 const sessionKit = new SessionKit({
   appName: 'Token Staking DApp',
-  chains: [Chains.Jungle4],
+  chains: [{
+    id: 'wax-testnet',
+    url: 'https://testnet.waxsweden.org',  // WAX Testnet endpoint
+    chainId: 'f16bff0b8fae16cc7cf1398dddaec3665240e0aa4a2da9a3bc6b5d2fa1265da3', // WAX Testnet Chain ID
+  }],
   ui: new WebRenderer(),
   walletPlugins: [new WalletPluginAnchor()],
 });
