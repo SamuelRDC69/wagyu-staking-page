@@ -148,7 +148,8 @@ function App() {
             </Button>
           ) : (
             <>
-              <Text>Welcome, {session.actor}</Text>
+              <Text>Welcome, {session.actor ? String(session.actor) : "Unknown User"}</Text>
+
               <Input
                 placeholder="Amount to stake"
                 value={stakedAmount}
