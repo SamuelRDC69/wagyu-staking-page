@@ -13,11 +13,12 @@ const sessionKit = new SessionKit({
   chains: [{
     id: 'wax-testnet',
     url: 'https://testnet.waxsweden.org',  // WAX Testnet endpoint
-    chainId: 'f16bff0b8fae16cc7cf1398dddaec3665240e0aa4a2da9a3bc6b5d2fa1265da3', // WAX Testnet Chain ID
+    // No chainId here, SessionKit will handle it based on the ID
   }],
   ui: new WebRenderer(),
   walletPlugins: [new WalletPluginAnchor()],
 });
+
 
 function App() {
   const [session, setSession] = useState<Session | undefined>(undefined); // State for managing the session
