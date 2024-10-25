@@ -136,53 +136,55 @@ function App() {
   }
 
   return (
-    <>
-      <div className="App">
-        <Heading as="h1" size="lg" textAlign="center" mt={8}>Token Staking DApp</Heading>
-        <div className="card">
-          {!session ? (
-            <Button colorScheme="blue" onClick={login} isLoading={isLoading}>
-              Connect Wallet
+  <>
+    <div className="App">
+      <Heading as="h1" size="lg" textAlign="center" mt={8}>
+        Token Staking DApp
+      </Heading>
+      <div className="card">
+        {!session ? (
+          <Button colorScheme="blue" onClick={login} isLoading={isLoading}>
+            Connect Wallet
+          </Button>
+        ) : (
+          <>
+            <Text>Welcome, {session.actor}</Text>
+            <Input
+              placeholder="Amount to stake"
+              value={stakedAmount}
+              onChange={(e) => setStakedAmount(e.target.value)}
+              mb={3}
+            />
+            <Button colorScheme="green" onClick={stakeTokens} isLoading={isLoading}>
+              Stake Tokens
             </Button>
-          ) : (
-            <>
-              <Text>Welcome, {session.actor}</Text>
-              <Input
-                placeholder="Amount to stake"
-                value={stakedAmount}
-                onChange={(e) => setStakedAmount(e.target.value)}
-                mb={3}
-              />
-              <Button colorScheme="green" onClick={stakeTokens} isLoading={isLoading}>
-                Stake Tokens
-              </Button>
-              <Button colorScheme="orange" onClick={claimRewards} isLoading={isLoading}>
-                Claim Rewards
-              </Button>
-              <Button colorScheme="red" onClick={unstakeTokens} isLoading={isLoading}>
-                Unstake Tokens
-              </Button>
-              <Button colorScheme="gray" onClick={logout} isLoading={isLoading}>
-                Logout
-              </Button>
-            </>
-          )}
-        </div>
-        <p className="read-the-docs">
-          Click on the Vite, React, and Wharf logos to learn more
-        </p>
-
-        {/* Button to navigate to Leaderboard */}
-        <Button colorScheme="blue" onClick={() => navigate('/leaderboard')}>
-          Go to Leaderboard
-        </Button>
+            <Button colorScheme="orange" onClick={claimRewards} isLoading={isLoading}>
+              Claim Rewards
+            </Button>
+            <Button colorScheme="red" onClick={unstakeTokens} isLoading={isLoading}>
+              Unstake Tokens
+            </Button>
+            <Button colorScheme="gray" onClick={logout} isLoading={isLoading}>
+              Logout
+            </Button>
+          </>
+        )}
       </div>
+      <p className="read-the-docs">
+        Click on the Vite, React, and Wharf logos to learn more
+      </p>
 
-      <Routes>
-        <Route path="/leaderboard" element={<Leaderboard />} />
-      </Routes>
-    </>
-  );
+      {/* Button to navigate to Leaderboard */}
+      <Button colorScheme="blue" onClick={() => navigate('/leaderboard')}>
+        Go to Leaderboard
+      </Button>
+    </div>
+
+    <Routes>
+      <Route path="/leaderboard" element={<Leaderboard />} />
+    </Routes>
+  </>
+);
 }
 
 export default App;
