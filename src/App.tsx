@@ -18,10 +18,11 @@ const sessionKit = new SessionKit({
       id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
       url: 'https://testnet.waxsweden.org',
     },
-  ] as Chains, // Ensure type assertion to Chains
+  ],
   ui: new WebRenderer(),
   walletPlugins: [new WalletPluginAnchor()],
 });
+
 
 function App() {
   const [session, setSession] = useState<Session | undefined>(undefined);
