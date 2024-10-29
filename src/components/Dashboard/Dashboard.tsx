@@ -12,11 +12,11 @@ import useBlockchainData from '../../hooks/useBlockchainData';
 const Dashboard: React.FC = () => {
   const { session } = useContext(UserContext);
 
-  const { projectedRewards, cooldownEndTime, riskLevel } = useBlockchainData(session);
-
   if (!session) {
-    return null;
+    return null; // or a loading indicator
   }
+
+  const { projectedRewards, cooldownEndTime, riskLevel } = useBlockchainData(session);
 
   return (
     <VStack spacing={{ base: 4, md: 6 }} width="100%" px={{ base: 2, md: 4 }}>
