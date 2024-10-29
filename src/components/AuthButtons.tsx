@@ -1,5 +1,6 @@
 // src/components/AuthButtons.tsx
-import { Button, VStack } from '@chakra-ui/react';
+import React from 'react';
+import { Button, HStack } from '@chakra-ui/react';
 
 interface AuthButtonsProps {
   isAuthenticated: boolean;
@@ -10,17 +11,17 @@ interface AuthButtonsProps {
 
 const AuthButtons: React.FC<AuthButtonsProps> = ({ isAuthenticated, login, logout, isLoading }) => {
   return (
-    <VStack spacing={4} width="100%">
-      {!isAuthenticated ? (
-        <Button colorScheme="blue" variant="solid" size="lg" onClick={login} isLoading={isLoading} _hover={{ bg: 'blue.600' }}>
-          Connect Wallet
-        </Button>
-      ) : (
-        <Button colorScheme="gray" variant="outline" size="lg" onClick={logout} isLoading={isLoading} _hover={{ borderColor: 'gray.500' }}>
+    <HStack spacing={4}>
+      {isAuthenticated ? (
+        <Button colorScheme="red" onClick={logout} isLoading={isLoading}>
           Logout
         </Button>
+      ) : (
+        <Button colorScheme="teal" onClick={login} isLoading={isLoading}>
+          Login with Anchor
+        </Button>
       )}
-    </VStack>
+    </HStack>
   );
 };
 
