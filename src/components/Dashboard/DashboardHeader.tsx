@@ -6,10 +6,12 @@ import { UserContext } from '../../contexts/UserContext';
 const DashboardHeader: React.FC = () => {
   const { session } = useContext(UserContext);
 
+  const actorName = session && session.actor ? session.actor.toString() : 'User';
+
   return (
     <Box width="100%" textAlign="center" mb={4}>
       <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold">
-        Welcome, {session?.actor.toString()}
+        Welcome, {actorName}
       </Text>
       <Text fontSize={{ base: 'sm', md: 'md' }}>Your StakeQuest Dashboard</Text>
     </Box>
