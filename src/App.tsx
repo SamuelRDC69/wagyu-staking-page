@@ -30,8 +30,11 @@ function App() {
   const toast = useToast();
 
   useEffect(() => {
-  sessionKit.restore().then(setSession).catch(console.error);
+  sessionKit.restore()
+    .then((restoredSession) => setSession(restoredSession || null))
+    .catch(console.error);
 }, []);
+
 
 
   const login = async () => {
