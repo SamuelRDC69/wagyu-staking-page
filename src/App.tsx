@@ -8,9 +8,8 @@ import './App.css';
 
 import AppHeader from './components/AppHeader';
 import AuthButtons from './components/AuthButtons';
-import LeaderboardButton from './components/LeaderboardButton';
 import Dashboard from './components/Dashboard/Dashboard';
-import AppRoutes from './components/AppRoutes';
+import { UserProvider } from './contexts/UserContext';
 
 const sessionKit = new SessionKit({
   appName: 'StakeQuest',
@@ -25,7 +24,7 @@ const sessionKit = new SessionKit({
 });
 
 function App() {
-  const [session, setSession] = useState<Session | undefined>(undefined);
+  const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
 
@@ -56,7 +55,7 @@ function App() {
     try {
       if (session) {
         await sessionKit.logout(session);
-        setSession(undefined);
+        setSession(null);
         toast({ status: 'success', description: 'Logged out successfully' });
       }
     } catch (e) {
@@ -68,22 +67,22 @@ function App() {
   };
 
   return (
-    <Container maxW="container.xl" p={0} centerContent>
-      <AppHeader />
-      <Box p={6} mt={6} borderRadius="lg" boxShadow="lg" bg="white" width="100%">
-        <VStack spacing={8} width="100%">
-          <AuthButtons
-            isAuthenticated={!!session}
-            login={login}
-            logout={logout}
-            isLoading={isLoading}
-          />
-          {session && <Dashboard session={session} />}
-          <LeaderboardButton />
-        </VStack>
-      </Box>
-      <AppRoutes />
-    </Container>
+    <UserProvider value={{ session, setSession }}>
+      <Container maxW="container.xl" p={0} centerContent>
+        <AppHeader />
+        <Box p={6} mt={6} borderRadius="lg" boxShadow="lg" bg="white" width="100%">
+          <VStack spacing={8} width="100%">
+            <AuthButtons
+              isAuthenticated={!!session}
+              login={login}
+              logout={logout}
+              isLoading={isLoading}
+            />
+            {session && <Dashboard />}
+          </VStack>
+        </Box>
+      </Container>
+    </UserProvider>
   );
 }
 
