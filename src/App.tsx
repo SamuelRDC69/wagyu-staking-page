@@ -4,7 +4,7 @@ import { SessionKit } from '@wharfkit/session';
 import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor';
 import WebRenderer from '@wharfkit/web-renderer';
 import { useToast, Box, VStack, Container } from '@chakra-ui/react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom'; // Updated import
 import './App.css';
 
 import AppHeader from './components/AppHeader';
@@ -91,25 +91,22 @@ function App() {
             isLoading={isLoading}
           />
           {session && (
-            <Switch>
-              <Route exact path="/">
-                <UniverseSelector />
-                <PoolSelector />
-                <Dashboard />
-              </Route>
-              <Route exact path="/guilds">
-                <GuildList />
-              </Route>
-              <Route path="/guilds/:guildId">
-                <GuildDetails />
-              </Route>
-              <Route exact path="/events">
-                <EventList />
-              </Route>
-              <Route path="/events/:eventId">
-                <EventDetails />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <UniverseSelector />
+                    <PoolSelector />
+                    <Dashboard />
+                  </>
+                }
+              />
+              <Route path="/guilds" element={<GuildList />} />
+              <Route path="/guilds/:guildId" element={<GuildDetails />} />
+              <Route path="/events" element={<EventList />} />
+              <Route path="/events/:eventId" element={<EventDetails />} />
+            </Routes>
           )}
         </VStack>
       </Box>
