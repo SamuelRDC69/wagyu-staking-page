@@ -10,7 +10,13 @@ import { UserContext } from '../../contexts/UserContext';
 import useBlockchainData from '../../hooks/useBlockchainData';
 
 const Dashboard: React.FC = () => {
-  const { session } = useContext(UserContext);
+  const userContext = useContext(UserContext);
+
+  if (!userContext) {
+    throw new Error('UserContext not found');
+  }
+
+  const { session } = userContext;
 
   if (!session) {
     return null;
