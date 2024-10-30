@@ -10,7 +10,7 @@ interface Universe {
 }
 
 const UniverseSelector: React.FC = () => {
-  const { session } = useContext(UserContext);
+  const { session } = useContext(UserContext) || {}; // Handling the potential undefined context
   const [universes, setUniverses] = useState<Universe[]>([]);
   const [selectedUniverse, setSelectedUniverse] = useState<string>('');
 
