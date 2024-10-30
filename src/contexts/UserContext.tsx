@@ -1,15 +1,17 @@
-// contexts/UserContext.tsx
-import React, { createContext, useContext, useState } from 'react';
+// src/contexts/UserContext.tsx
+import React, { createContext, useState, FC } from 'react';
 import { Session } from '@wharfkit/session';
 
-interface UserContextType {
+interface UserContextProps {
   session: Session | null;
   setSession: React.Dispatch<React.SetStateAction<Session | null>>;
 }
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+// Correctly declare and export UserContext
+export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+// Define and export UserProvider component
+export const UserProvider: FC = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null);
 
   return (
@@ -17,12 +19,4 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </UserContext.Provider>
   );
-};
-
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
-  }
-  return context;
 };
