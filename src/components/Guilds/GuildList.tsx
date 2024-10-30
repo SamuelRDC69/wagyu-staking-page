@@ -4,16 +4,23 @@ import { Link } from 'react-router-dom';
 import { GuildContext } from '../../contexts/GuildContext';
 import { Box, Text, VStack } from '@chakra-ui/react';
 
-const GuildList: React.FC = () => {
-  const { guilds } = useContext(GuildContext);
+interface Guild {
+  id: string;
+  name: string;
+  description: string;
+}
 
-  if (!guilds || guilds.length === 0) {
+const GuildList: React.FC = () => {
+  const guildContext = useContext(GuildContext);
+  const guilds = guildContext?.guilds || []; // Use optional chaining to handle undefined context
+
+  if (guilds.length === 0) {
     return <Text>No guilds available.</Text>;
   }
 
   return (
     <VStack spacing={4}>
-      {guilds.map((guild) => (
+      {guilds.map((guild: Guild) => (
         <Box
           key={guild.id}
           p={4}
