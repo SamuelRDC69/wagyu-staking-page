@@ -1,8 +1,9 @@
 // src/components/Guilds/GuildList.tsx
 import React, { useEffect, useContext } from 'react';
-import { VStack, Box, Text } from '@chakra-ui/react';
+import { VStack, Box, Text, Link } from '@chakra-ui/react';
 import { GuildContext } from '../../contexts/GuildContext';
 import useMockGuilds from '../../hooks/useMockGuilds';
+import { Link as RouterLink } from 'react-router-dom';
 
 const GuildList: React.FC = () => {
   const { guilds, setGuilds } = useContext(GuildContext) || {};
@@ -26,7 +27,9 @@ const GuildList: React.FC = () => {
       {guilds.map((guild) => (
         <Box key={guild.id} p={4} borderWidth="1px" borderRadius="md">
           <Text fontSize="lg" fontWeight="bold">
-            {guild.name}
+            <Link as={RouterLink} to={`/guilds/${guild.id}`}>
+              {guild.name}
+            </Link>
           </Text>
           <Text>{guild.description}</Text>
         </Box>
