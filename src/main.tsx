@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';  // For routing
 import { UserProvider } from './contexts/UserContext'; // Import UserProvider
 import { PoolProvider } from './contexts/PoolContext';
 import { GuildProvider } from './contexts/GuildContext';
+import { EventProvider } from './contexts/EventContext';
 
 
 // Initialize Eruda only in development or on mobile devices
@@ -25,7 +26,9 @@ root.render(
         <UserProvider>
           <PoolProvider>
             <GuildProvider>
-              <App />
+              <EventProvider>
+                <App />
+              </EventProvider>
             </GuildProvider>
           </PoolProvider>
         </UserProvider>
