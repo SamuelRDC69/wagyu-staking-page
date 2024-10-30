@@ -4,11 +4,18 @@ import { SessionKit } from '@wharfkit/session';
 import { WalletPluginAnchor } from '@wharfkit/wallet-plugin-anchor';
 import WebRenderer from '@wharfkit/web-renderer';
 import { useToast, Box, VStack, Container } from '@chakra-ui/react';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
 import AppHeader from './components/AppHeader';
 import AuthButtons from './components/AuthButtons';
 import Dashboard from './components/Dashboard/Dashboard';
+import UniverseSelector from './components/Navigation/UniverseSelector';
+import PoolSelector from './components/Navigation/PoolSelector';
+import GuildList from './components/Guilds/GuildList';
+import GuildDetails from './components/Guilds/GuildDetails';
+import EventList from './components/Events/EventList';
+import EventDetails from './components/Events/EventDetails';
 import { UserContext } from './contexts/UserContext';
 
 const sessionKit = new SessionKit({
@@ -83,7 +90,27 @@ function App() {
             logout={logout}
             isLoading={isLoading}
           />
-          {session && <Dashboard />}
+          {session && (
+            <Switch>
+              <Route exact path="/">
+                <UniverseSelector />
+                <PoolSelector />
+                <Dashboard />
+              </Route>
+              <Route exact path="/guilds">
+                <GuildList />
+              </Route>
+              <Route path="/guilds/:guildId">
+                <GuildDetails />
+              </Route>
+              <Route exact path="/events">
+                <EventList />
+              </Route>
+              <Route path="/events/:eventId">
+                <EventDetails />
+              </Route>
+            </Switch>
+          )}
         </VStack>
       </Box>
     </Container>
