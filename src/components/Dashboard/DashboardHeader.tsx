@@ -4,7 +4,13 @@ import { Box, Text } from '@chakra-ui/react';
 import { UserContext } from '../../contexts/UserContext';
 
 const DashboardHeader: React.FC = () => {
-  const { session } = useContext(UserContext);
+  const userContext = useContext(UserContext);
+
+  if (!userContext) {
+    throw new Error('UserContext not found');
+  }
+
+  const { session } = userContext;
 
   const actorName = session && session.actor ? session.actor.toString() : 'User';
 
