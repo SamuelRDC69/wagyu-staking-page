@@ -1,5 +1,5 @@
 // src/contexts/UserContext.tsx
-import React, { createContext, useState, FC } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 import { Session } from '@wharfkit/session';
 
 interface UserContextProps {
@@ -7,11 +7,13 @@ interface UserContextProps {
   setSession: React.Dispatch<React.SetStateAction<Session | null>>;
 }
 
-// Correctly declare and export UserContext
 export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-// Define and export UserProvider component
-export const UserProvider: FC = ({ children }) => {
+interface UserProviderProps {
+  children: ReactNode;
+}
+
+export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null);
 
   return (
