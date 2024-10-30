@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
   const { session } = useContext(UserContext);
 
   if (!session) {
-    return null; // or a loading indicator
+    return null;
   }
 
   const { projectedRewards, cooldownEndTime, riskLevel } = useBlockchainData(session);
