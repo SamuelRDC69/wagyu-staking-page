@@ -11,12 +11,8 @@ interface Event {
   date: string;
 }
 
-interface RouteParams {
-  eventId: string;
-}
-
 const EventDetails: React.FC = () => {
-  const { eventId } = useParams<RouteParams>();
+  const { eventId } = useParams<{ eventId: string }>(); // Adjusted type
   const { events } = useContext(EventContext) || { events: [] };
   const event = events.find((e) => e.id === eventId);
 
