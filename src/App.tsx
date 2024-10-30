@@ -73,23 +73,27 @@ function App() {
   };
 
   return (
-    <UserProvider>
-      <Container maxW="container.xl" p={0} centerContent>
-        <AppHeader />
-        <Box p={6} mt={6} borderRadius="lg" boxShadow="lg" bg="white" width="100%">
-          <VStack spacing={8} width="100%">
-            <AuthButtons
-              isAuthenticated={!!session}
-              login={login}
-              logout={logout}
-              isLoading={isLoading}
-            />
-            {session && <Dashboard />}
-          </VStack>
-        </Box>
-      </Container>
-    </UserProvider>
+    <Container maxW="container.xl" p={0} centerContent>
+      <AppHeader />
+      <Box p={6} mt={6} borderRadius="lg" boxShadow="lg" bg="white" width="100%">
+        <VStack spacing={8} width="100%">
+          <AuthButtons
+            isAuthenticated={!!session}
+            login={login}
+            logout={logout}
+            isLoading={isLoading}
+          />
+          {session && <Dashboard />}
+        </VStack>
+      </Box>
+    </Container>
   );
 }
 
-export default App;
+export default function RootApp() {
+  return (
+    <UserProvider>
+      <App />
+    </UserProvider>
+  );
+}
