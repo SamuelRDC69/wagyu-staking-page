@@ -9,7 +9,7 @@ import './App.css';
 import AppHeader from './components/AppHeader';
 import AuthButtons from './components/AuthButtons';
 import Dashboard from './components/Dashboard/Dashboard';
-import { UserProvider, UserContext } from './contexts/UserContext';
+import { UserContext, UserProvider } from './contexts/UserContext';
 
 const sessionKit = new SessionKit({
   appName: 'StakeQuest',
@@ -24,7 +24,13 @@ const sessionKit = new SessionKit({
 });
 
 function App() {
-  const { session, setSession } = useContext(UserContext);
+  const userContext = useContext(UserContext);
+
+  if (!userContext) {
+    throw new Error('UserContext not found');
+  }
+
+  const { session, setSession } = userContext;
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const toast = useToast();
 
