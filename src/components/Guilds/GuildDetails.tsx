@@ -11,7 +11,8 @@ interface Guild {
 }
 
 interface RouteParams {
-  guildId?: string; // Making it optional to satisfy TypeScript's Record<string, string | undefined> constraint.
+  guildId?: string;
+  [key: string]: string | undefined; // Add index signature to satisfy TypeScript
 }
 
 const GuildDetails: React.FC = () => {
