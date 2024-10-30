@@ -3,13 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { Box, Text } from '@chakra-ui/react';
 
 interface CooldownCountdownProps {
-  cooldownEndTime: Date;
+  cooldownEndTime: Date | null;
 }
 
 const CooldownCountdown: React.FC<CooldownCountdownProps> = ({ cooldownEndTime }) => {
   const [timeLeft, setTimeLeft] = useState<string>('');
 
   useEffect(() => {
+    if (!cooldownEndTime) {
+      setTimeLeft('Cooldown time not set');
+      return;
+    }
+
     const updateTimer = () => {
       const now = new Date().getTime();
       const distance = cooldownEndTime.getTime() - now;
@@ -25,8 +30,8 @@ const CooldownCountdown: React.FC<CooldownCountdownProps> = ({ cooldownEndTime }
       }
     };
 
-    updateTimer();
     const timerId = setInterval(updateTimer, 1000);
+    updateTimer();
     return () => clearInterval(timerId);
   }, [cooldownEndTime]);
 
