@@ -5,6 +5,9 @@ import './index.css';
 import { ChakraProvider } from '@chakra-ui/react'; // For Chakra UI
 import { BrowserRouter } from 'react-router-dom';  // For routing
 import { UserProvider } from './contexts/UserContext'; // Import UserProvider
+import { PoolProvider } from './contexts/PoolContext';
+import { GuildProvider } from './contexts/GuildContext';
+
 
 // Initialize Eruda only in development or on mobile devices
 if (import.meta.env.MODE === 'development' || /Android|iPhone/i.test(navigator.userAgent)) {
@@ -20,7 +23,11 @@ root.render(
     <BrowserRouter>
       <ChakraProvider>
         <UserProvider>
-          <App />
+          <PoolProvider>
+            <GuildProvider>
+              <App />
+            </GuildProvider>
+          </PoolProvider>
         </UserProvider>
       </ChakraProvider>
     </BrowserRouter>
