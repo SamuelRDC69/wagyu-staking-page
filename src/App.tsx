@@ -9,7 +9,7 @@ import './App.css';
 import AppHeader from './components/AppHeader';
 import AuthButtons from './components/AuthButtons';
 import Dashboard from './components/Dashboard/Dashboard';
-import { UserContext, UserProvider } from './contexts/UserContext';
+import { UserContext } from './contexts/UserContext';
 
 const sessionKit = new SessionKit({
   appName: 'StakeQuest',
@@ -90,10 +90,4 @@ function App() {
   );
 }
 
-export default function RootApp() {
-  return (
-    <UserProvider>
-      <App />
-    </UserProvider>
-  );
-}
+export default App;
