@@ -10,8 +10,13 @@ interface Guild {
   description: string;
 }
 
+// Update this interface to ensure `guilds` is present in GuildContextProps
+interface GuildContextProps {
+  guilds: Guild[]; // Ensure guilds is part of the context props
+}
+
 const GuildList: React.FC = () => {
-  const guildContext = useContext(GuildContext);
+  const guildContext = useContext(GuildContext) as GuildContextProps; // Explicitly cast to ensure guilds exists
   const guilds = guildContext?.guilds || []; // Use optional chaining to handle undefined context
 
   if (guilds.length === 0) {
